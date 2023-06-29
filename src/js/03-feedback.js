@@ -1,7 +1,7 @@
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
-const dataForm = {};
+let dataForm = {};
 
 
 const FORM = 'feedback-form-state';
@@ -28,10 +28,17 @@ function saveData(e) {
 
 form.addEventListener('submit', sendForm);
 function sendForm(evt) {
+    if ((dataForm.email && dataForm.message)) {
     evt.preventDefault();
-    console.log('send form');
+    console.log(dataForm);
     evt.currentTarget.reset();
-    localStorage.removeItem(FORM);
+    dataForm = {};
+    localStorage.removeItem(FORM);    
+    } else {
+        evt.preventDefault();
+        return (console.log('Check the data please'));
+        dataForm = {};
+    }
 };
 
 function dataLocal() { 
